@@ -1,0 +1,22 @@
+FROM elixir:1.14-alpine
+
+WORKDIR /app
+
+RUN apk add --no-cache build-base npm git python3
+
+RUN mix local.hex --force && \
+    mix local.rebar --force
+
+COPY mix.exs mix.lock ./
+COPY config config
+RUN mix deps.get --only prod
+
+COPY assets assets
+COPY priv priv
+COPY lib lib
+
+RUN cd assets && npm install
+RUN mix assets.deploy
+
+EXPOSE 4000
+CMD ["mix", "phx.server"]
