@@ -2,6 +2,9 @@ FROM elixir:1.14-alpine
 
 WORKDIR /app
 
+# Set environment to prod
+ENV MIX_ENV=prod
+
 RUN apk add --no-cache build-base npm git python3
 
 RUN mix local.hex --force && \
@@ -19,7 +22,7 @@ RUN cd assets && npm install
 COPY priv priv
 COPY lib lib
 
-# Deploy assets
+# Deploy assets with MIX_ENV=prod
 RUN mix assets.deploy
 
 EXPOSE 4000
