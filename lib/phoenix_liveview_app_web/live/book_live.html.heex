@@ -1,0 +1,59 @@
+<%!-- lib/phoenix_liveview_app_web/live/book_live.html.heex --%>
+<div class="container mx-auto px-4 py-8 max-w-6xl">
+  <h1 class="text-3xl font-bold text-gray-800 mb-8">Manajemen Buku</h1>
+
+  <!-- Form untuk menambah buku -->
+  <div class="bg-white rounded-lg shadow-md p-6 mb-8">
+    <h2 class="text-xl font-semibold text-gray-700 mb-4">Tambah Buku Baru</h2>
+    <.form for={%{}} phx-submit="save" class="space-y-4">
+      <div class="mb-4">
+        <label class="block text-sm font-medium text-gray-700 mb-2">Judul</label>
+        <input 
+          type="text" 
+          name="book[title]" 
+          value={@form_data["title"]}
+          class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
+        />
+      </div>
+      <!-- Form fields lainnya -->
+      <button type="submit" class="bg-indigo-600 text-white px-4 py-2 rounded-md hover:bg-indigo-700 transition-colors">
+        Simpan
+      </button>
+    </.form>
+  </div>
+
+  <!-- Tabel untuk menampilkan buku -->
+  <div class="bg-white rounded-lg shadow-md overflow-hidden">
+    <h2 class="text-xl font-semibold text-gray-700 p-6 border-b">Daftar Buku</h2>
+    <div class="overflow-x-auto">
+      <table class="min-w-full divide-y divide-gray-200">
+        <thead class="bg-gray-50">
+          <tr>
+            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Judul</th>
+            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Penulis</th>
+            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Tahun</th>
+            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Aksi</th>
+          </tr>
+        </thead>
+        <tbody class="bg-white divide-y divide-gray-200">
+          <%= for book <- @books do %>
+            <tr class="hover:bg-gray-50">
+              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900"><%= book["title"] %></td>
+              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900"><!-- Penulis --></td>
+              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900"><!-- Tahun --></td>
+              <td class="px-6 py-4 whitespace-nowrap text-sm">
+                <button 
+                  phx-click="delete" 
+                  phx-value-id={book.id}
+                  class="text-red-600 hover:text-red-900 font-medium"
+                >
+                  Hapus
+                </button>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
