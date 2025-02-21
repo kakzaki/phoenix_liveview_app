@@ -11,11 +11,15 @@ COPY mix.exs mix.lock ./
 COPY config config
 RUN mix deps.get --only prod
 
+# Copy assets first and install npm dependencies
 COPY assets assets
+RUN cd assets && npm install
+
+# Copy remaining files
 COPY priv priv
 COPY lib lib
 
-RUN cd assets && npm install
+# Deploy assets
 RUN mix assets.deploy
 
 EXPOSE 4000
