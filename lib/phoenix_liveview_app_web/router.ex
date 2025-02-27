@@ -17,11 +17,11 @@ defmodule PhoenixLiveviewAppWeb.Router do
   scope "/", PhoenixLiveviewAppWeb do
     pipe_through :browser
 
-    # Route default dari Phoenix
-    get "/", PageController, :home
+    # # Route default dari Phoenix
+    # get "/", PageController, :home
 
     # Tambahkan route untuk books
-    live "/books", BookLive
+    live "/", BookLive
   end
 
   # Other scopes may use custom stacks.
