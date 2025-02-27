@@ -13,7 +13,7 @@ if config_env() == :prod do
       """
 
   host = System.get_env("PHX_HOST") || "phoenix-liveview-app.zeabur.app"
-  port = String.to_integer(System.get_env("PORT") || "4000")
+  port = String.to_integer(System.get_env("PORT") || 4000)
 
   config :phoenix_liveview_app, PhoenixLiveviewAppWeb.Endpoint,
     url: [host: host, scheme: "https"],
